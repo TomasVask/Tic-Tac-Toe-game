@@ -70,13 +70,13 @@ ties.tiesResult.innerHTML = tiesScore;
 
 
 let gameFinished = false;
-let preventionStop = false;
+let cpuStop = false;
 
 // ***********************************************
 // **************FUNCTIONS************************
 // ***********************************************
 
-const turnDisplaySwitch = function () {
+const turnDisplaySwitch = function () { //switching icon of every turn
     if (initialTurn % 2 === 0) {
         turnDisplayImg.setAttribute("src", "/starter-code/assets/icon-x-grey.svg");
     } else {
@@ -169,6 +169,7 @@ const gameCheck = function () {
     winScenarios(grid1, grid2, grid3);
     winScenarios(grid1, grid4, grid7);
     winScenarios(grid1, grid5, grid9);
+    winScenarios(grid2, grid5, grid8);
     winScenarios(grid3, grid6, grid9);
     winScenarios(grid3, grid5, grid7);
     winScenarios(grid4, grid5, grid6);
@@ -198,6 +199,7 @@ const cpuClickX = function () {
     initialTurn++;
     turnDisplaySwitch();
     gameCheck();
+    // console.log(`RANDOM -- NextTurn ${initialTurn}, CPU added: ${excludeArray}`);
 };
 
 const cpuClickZero = async function () {
@@ -211,6 +213,7 @@ const cpuClickZero = async function () {
     initialTurn++;
     turnDisplaySwitch();
     gameCheck();
+    // console.log(`RANDOM -- NextTurn ${initialTurn}, CPU added: ${excludeArray}`);
 }
 
 const cpuRandomClicker = function () {
@@ -230,7 +233,7 @@ const cpuRandomClicker = function () {
         }
 };
 
-const cpuPreventClicker = function (input) {
+const cpuActiveClicker = function (input) {
     const array = [...gridElement]
     const index = array.indexOf(input)
     if (!excludeArray.includes(index)) {
@@ -244,31 +247,54 @@ const cpuPreventClicker = function (input) {
     input.setAttribute("disabled", "true");
     initialTurn++;
     turnDisplaySwitch();
-    preventionStop = true;
+    cpuStop = true;
     gameCheck();
+    // console.log(`ACTIVE -- NextTurn ${initialTurn}, CPU added: ${excludeArray}`);
 };
 
-async function preventScenarios(grA, grB, grC, clc, cpu) {
-    if (grA.classList[1] === clc && grB.classList[1] === clc && grC.classList[1] !== cpu
-        || grA.classList[1] === clc && grC.classList[1] === clc && grB.classList[1] !== cpu
-        || grB.classList[1] === clc && grC.classList[1] === clc && grA.classList[1] !== cpu) {
-        if (grA.classList[1] === clc && grB.classList[1] === clc) {
+function cpuScenarios(grA, grB, grC, manual, cpu) {
+    if (grA.classList[1] === cpu && grB.classList[1] === cpu && grC.classList[1] !== manual
+        || grA.classList[1] === cpu && grC.classList[1] === cpu && grB.classList[1] !== manual
+        || grB.classList[1] === cpu && grC.classList[1] === cpu && grA.classList[1] !== manual) {
+        if (grA.classList[1] === cpu && grB.classList[1] === cpu) {
             setTimeout(() => {
-                if (!preventionStop) {
-                    cpuPreventClicker(grC);
+                if (!cpuStop && !gameFinished) {
+                    cpuActiveClicker(grC);
+                };
+            }, 270);
+        } else if (grA.classList[1] === cpu && grC.classList[1] === cpu) {
+            setTimeout(() => {
+                if (!cpuStop && !gameFinished) {
+                    cpuActiveClicker(grB);
+                };
+            }, 270);
+        } else if (grB.classList[1] === cpu && grC.classList[1] === cpu) {
+            setTimeout(() => {
+                if (!cpuStop && !gameFinished) {
+                    cpuActiveClicker(grA);
+                };
+            }, 270);
+        }
+    } else if (grA.classList[1] === manual && grB.classList[1] === manual && grC.classList[1] !== cpu
+        || grA.classList[1] === manual && grC.classList[1] === manual && grB.classList[1] !== cpu
+        || grB.classList[1] === manual && grC.classList[1] === manual && grA.classList[1] !== cpu) {
+        if (grA.classList[1] === manual && grB.classList[1] === manual) {
+            setTimeout(() => {
+                if (!cpuStop && !gameFinished) {
+                    cpuActiveClicker(grC);
                 };
             }, 290);
 
-        } else if (grA.classList[1] === clc && grC.classList[1] === clc) {
+        } else if (grA.classList[1] === manual && grC.classList[1] === manual) {
             setTimeout(() => {
-                if (!preventionStop) {
-                    cpuPreventClicker(grB);
+                if (!cpuStop && !gameFinished) {
+                    cpuActiveClicker(grB);
                 };
             }, 290);
-        } else if (grB.classList[1] === clc && grC.classList[1] === clc) {
+        } else if (grB.classList[1] === manual && grC.classList[1] === manual) {
             setTimeout(() => {
-                if (!preventionStop) {
-                    cpuPreventClicker(grA);
+                if (!cpuStop && !gameFinished) {
+                    cpuActiveClicker(grA);
                 };
             }, 290);
         };
@@ -277,33 +303,29 @@ async function preventScenarios(grA, grB, grC, clc, cpu) {
     }
 };
 
-const cpuRunnerX = async function () {
-    preventScenarios(grid1, grid2, grid3, "clickedZero", "clickedX");
-    preventScenarios(grid1, grid4, grid7, "clickedZero", "clickedX");
-    preventScenarios(grid1, grid5, grid9, "clickedZero", "clickedX");
-    preventScenarios(grid2, grid5, grid8, "clickedZero", "clickedX");
-    preventScenarios(grid3, grid6, grid9, "clickedZero", "clickedX");
-    preventScenarios(grid3, grid5, grid7, "clickedZero", "clickedX");
-    preventScenarios(grid4, grid5, grid6, "clickedZero", "clickedX");
-    preventScenarios(grid7, grid8, grid9, "clickedZero", "clickedX");
+const cpuRunner = function () {
+    if (x.xP1) {
+        cpuScenarios(grid1, grid2, grid3, "clickedX", "clickedZero");
+        cpuScenarios(grid1, grid4, grid7, "clickedX", "clickedZero");
+        cpuScenarios(grid1, grid5, grid9, "clickedX", "clickedZero");
+        cpuScenarios(grid2, grid5, grid8, "clickedX", "clickedZero");
+        cpuScenarios(grid3, grid6, grid9, "clickedX", "clickedZero");
+        cpuScenarios(grid3, grid5, grid7, "clickedX", "clickedZero");
+        cpuScenarios(grid4, grid5, grid6, "clickedX", "clickedZero");
+        cpuScenarios(grid7, grid8, grid9, "clickedX", "clickedZero");
+    } else {
+        cpuScenarios(grid1, grid2, grid3, "clickedZero", "clickedX");
+        cpuScenarios(grid1, grid4, grid7, "clickedZero", "clickedX");
+        cpuScenarios(grid1, grid5, grid9, "clickedZero", "clickedX");
+        cpuScenarios(grid2, grid5, grid8, "clickedZero", "clickedX");
+        cpuScenarios(grid3, grid6, grid9, "clickedZero", "clickedX");
+        cpuScenarios(grid3, grid5, grid7, "clickedZero", "clickedX");
+        cpuScenarios(grid4, grid5, grid6, "clickedZero", "clickedX");
+        cpuScenarios(grid7, grid8, grid9, "clickedZero", "clickedX");
+    }
 };
+cpuRunner();
 
-const cpuRunnerZero = async function () {
-    preventScenarios(grid1, grid2, grid3, "clickedX", "clickedZero");
-    preventScenarios(grid1, grid4, grid7, "clickedX", "clickedZero");
-    preventScenarios(grid1, grid5, grid9, "clickedX", "clickedZero");
-    preventScenarios(grid2, grid5, grid8, "clickedX", "clickedZero");
-    preventScenarios(grid3, grid6, grid9, "clickedX", "clickedZero");
-    preventScenarios(grid3, grid5, grid7, "clickedX", "clickedZero");
-    preventScenarios(grid4, grid5, grid6, "clickedX", "clickedZero");
-    preventScenarios(grid7, grid8, grid9, "clickedX", "clickedZero");
-};
-
-if (x.xP1) {
-    cpuRunnerZero();
-} else {
-    cpuRunnerX();
-}
 
 function manualClicker(gridInput) {
     gridInput.classList.replace("enterX", "clickedX");
@@ -317,7 +339,8 @@ function manualClicker(gridInput) {
     gridInput.setAttribute("disabled", "true");
     initialTurn++;
     turnDisplaySwitch();
-    preventionStop = false;
+    cpuStop = false;
+    // console.log(`user -- NextTurn ${initialTurn}, USER added: ${excludeArray}`);
 };
 
 grid1.addEventListener("mouseenter", markSelectEnter);
@@ -328,11 +351,7 @@ grid1.addEventListener("click", () => {
     winScenarios(grid1, grid4, grid7);
     winScenarios(grid1, grid5, grid9);
     tiesRunner();
-    if (x.xP1) {
-        cpuRunnerZero();
-    } else {
-        cpuRunnerX();
-    };
+    cpuRunner();
 });
 
 
@@ -344,11 +363,7 @@ grid2.addEventListener("click", () => {
     winScenarios(grid1, grid2, grid3);
     winScenarios(grid2, grid5, grid8);
     tiesRunner();
-    if (x.xP1) {
-        cpuRunnerZero();
-    } else {
-        cpuRunnerX();
-    };
+    cpuRunner();
 });
 
 
@@ -361,11 +376,7 @@ grid3.addEventListener("click", () => {
     winScenarios(grid3, grid6, grid9);
     winScenarios(grid3, grid5, grid7);
     tiesRunner();
-    if (x.xP1) {
-        cpuRunnerZero();
-    } else {
-        cpuRunnerX();
-    };
+    cpuRunner();
 });
 
 
@@ -377,11 +388,7 @@ grid4.addEventListener("click", () => {
     winScenarios(grid1, grid4, grid7);
     winScenarios(grid4, grid5, grid6);
     tiesRunner();
-    if (x.xP1) {
-        cpuRunnerZero();
-    } else {
-        cpuRunnerX();
-    };
+    cpuRunner();
 });
 
 
@@ -395,11 +402,7 @@ grid5.addEventListener("click", () => {
     winScenarios(grid3, grid5, grid7);
     winScenarios(grid4, grid5, grid6);
     tiesRunner();
-    if (x.xP1) {
-        cpuRunnerZero();
-    } else {
-        cpuRunnerX();
-    };
+    cpuRunner();
 });
 
 
@@ -411,11 +414,7 @@ grid6.addEventListener("click", () => {
     winScenarios(grid3, grid6, grid9);
     winScenarios(grid4, grid5, grid6);
     tiesRunner();
-    if (x.xP1) {
-        cpuRunnerZero();
-    } else {
-        cpuRunnerX();
-    };
+    cpuRunner();
 });
 
 
@@ -428,11 +427,7 @@ grid7.addEventListener("click", () => {
     winScenarios(grid3, grid5, grid7);
     winScenarios(grid7, grid8, grid9);
     tiesRunner();
-    if (x.xP1) {
-        cpuRunnerZero();
-    } else {
-        cpuRunnerX();
-    };
+    cpuRunner();
 });
 
 // *********
@@ -443,11 +438,7 @@ grid8.addEventListener("click", () => {
     winScenarios(grid7, grid8, grid9);
     winScenarios(grid2, grid5, grid8);
     tiesRunner();
-    if (x.xP1) {
-        cpuRunnerZero();
-    } else {
-        cpuRunnerX();
-    };
+    cpuRunner();
 });
 
 // *********
@@ -459,11 +450,7 @@ grid9.addEventListener("click", () => {
     winScenarios(grid3, grid6, grid9);
     winScenarios(grid7, grid8, grid9);
     tiesRunner();
-    if (x.xP1) {
-        cpuRunnerZero();
-    } else {
-        cpuRunnerX();
-    };
+    cpuRunner();
 });
 
 const cleanup = () => {
@@ -504,33 +491,21 @@ x.nextX.addEventListener("click", (e) => {
     e.preventDefault();
     x.modalX.classList.toggle("hidden");
     nextRound();
-    if (x.xP1) {
-        cpuRunnerZero();
-    } else {
-        cpuRunnerX();
-    }
+    cpuRunner();
 });
 
 zero.nextZero.addEventListener("click", (e) => {
     e.preventDefault();
     zero.modalZero.classList.toggle("hidden");
     nextRound();
-    if (x.xP1) {
-        cpuRunnerZero();
-    } else {
-        cpuRunnerX();
-    }
+    cpuRunner();
 });
 
 ties.nextTies.addEventListener("click", (e) => {
     e.preventDefault();
     ties.modalTies.classList.toggle("hidden");
     nextRound();
-    if (x.xP1) {
-        cpuRunnerZero();
-    } else {
-        cpuRunnerX();
-    }
+    cpuRunner();
 });
 quit[0].addEventListener("click", () => {
     sessionStorage.clear();
