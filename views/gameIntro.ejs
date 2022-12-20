@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/ico" sizes="32x32" href="../starter-code/assets/favicon-32x32.ico">
+    <link rel="stylesheet" href="/stylesheets/intro.css">
+    <title>TIC TAC TOE intro</title>
+</head>
+
+<body>
+    <div class="mainContainer">
+        <form method="post" name="form">
+            <div class="xZeroLogos">
+                <img src="/starter-code/assets/logo.svg" alt="">
+            </div>
+            <div class="pickMarkBox">
+                <p>PICK PLAYER 1'S MARK</p>
+                <div class="buttonBox">
+                    <input type="radio" class="P1" id="xButton" name="picks1st" value="xButton" alt="">
+                    <label class="player1" for="xButton"></label>
+                    <input type="radio" class="P2" id="zeroButton" name="picks1st" value="zeroButton" alt="">
+                    <label class="player2" for="zeroButton"></label>
+                </div>
+                <p>REMEMBER: X GOES FIRST</p>
+            </div>
+            <input class="gameMode" id="newGameVsCPU" type="submit" value="NEW GAME (VS CPU)"
+                onclick="javascript: form.action='/cpugame'">
+            <input class="gameMode" id="newGameVsPlayer" type="submit" value="NEW GAME (VS PLAYER)"
+                onclick="javascript: form.action='multiplayergame'">
+        </form>
+    </div>
+</body>
+
+
+
+<script src="/javascripts/gameIntro.js"></script>
+
+</html>

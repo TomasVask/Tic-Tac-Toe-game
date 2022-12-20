@@ -1,0 +1,220 @@
+:root {
+    --medium-grey-bg: #1F3641;
+    --dark-grey-bg: #1A2A33;
+    --dark-grey-shadow: inset 0px -8px 0px #10212A;
+    --light-grey-bg: #A8BFC9;
+    --grey-hover-bg: #DBE8ED;
+    --btn-light-shadow: inset 0px -4px 0px #6B8997;
+    --x-color: #31C3BD;
+    --x-color-light: #65E9E4;
+    --x-shadow: inset 0px -8px 0px #118C87;
+    --zero-color: #F2B137;
+    --zero-color-light: #FFC860;
+    --zero-shadow: inset 0px -8px 0px #CC8B13;
+    --x-icon-grey: url("/starter-code/assets/icon-x-grey.svg");
+    --x-icon-dark-grey: url("/starter-code/assets/icon-x-dark-grey.svg");
+    --zero-icon-grey: url("/starter-code/assets/icon-o-grey.svg");
+    --zero-icon-dark-grey: url("/starter-code/assets/icon-o-dark-grey.svg");
+    --x-icon: url("/starter-code/assets/icon-x.svg");
+    --zero-icon: url("/starter-code/assets/icon-o.svg");
+}
+
+body {
+    font-family: 'Outfit', sans-serif;
+    background-color: var(--dark-grey-bg);
+}
+
+.mainContainer {
+    width: 28.75rem;
+    margin: 0 auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.xZeroLogos {
+    width: 4.5em;
+    margin: 0 auto;
+}
+
+.gameMode {
+    font-size: 1.25em;
+    font-weight: 700;
+    width: 100%;
+    height: 4.1875rem;
+    border-radius: 15px;
+    border: none;
+    display: block;
+    color: var(--dark-grey-bg);
+    letter-spacing: 1.25px;
+}
+
+#newGameVsCPU {
+    background-color: var(--zero-color);
+    box-shadow: var(--zero-shadow);
+
+    margin-bottom: 1.25em;
+}
+
+#newGameVsCPU:hover {
+    background: var(--zero-color-light);
+}
+
+
+
+#newGameVsPlayer {
+    background-color: var(--x-color);
+    box-shadow: var(--x-shadow);
+}
+
+#newGameVsPlayer:hover {
+    background: var(--x-color-light);
+}
+
+#newGameVsCPU:disabled {
+    background-color: var(--zero-color-light);
+    opacity: 50%;
+    color: #87abbb;
+    box-shadow: var(--zero-shadow);
+}
+
+#newGameVsPlayer:disabled {
+    background-color: var(--x-color-light);
+    opacity: 50%;
+    color: #87abbb;
+    box-shadow: var(--x-shadow)
+}
+
+.pickMarkBox {
+    width: 100%;
+    height: 12.8125rem;
+    background-color: var(--medium-grey-bg);
+    border-radius: 15px;
+    box-shadow: var(--dark-grey-shadow);
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    color: var(--light-grey-bg);
+    letter-spacing: 1px;
+    margin-block: 2.4em;
+}
+
+
+
+p:nth-of-type(1) {
+    margin-top: 1.4em;
+}
+
+p:nth-of-type(2) {
+    font-size: 0.875em;
+    font-weight: 500;
+    letter-spacing: 0.88px;
+    margin-bottom: 1.6em;
+    opacity: 50%;
+}
+
+/* using radio buttons as a background. Code down below changes the radios buttons style */
+.buttonBox {
+    width: 24.7rem;
+    height: 3.4em;
+    background-color: var(--dark-grey-bg);
+    padding: 9px 8px;
+    border-radius: 10px;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+}
+
+.buttonBox input[type="radio"] {
+    opacity: 0;
+    position: fixed;
+    width: 0;
+}
+
+.buttonBox label {
+    display: inline-block;
+    background-color: var(--dark-grey-bg);
+    padding: 1px 98px;
+    border: none;
+    border-radius: 10px;
+}
+
+.buttonBox label.player1:hover,
+.buttonBox label.player2:hover {
+    background-color: #A8BFC90D;
+}
+
+.buttonBox input[type="radio"]:checked+label {
+    background-color: var(--light-grey-bg);
+}
+
+.buttonBox input[type="radio"]:checked+label.player1,
+.buttonBox label.player1,
+.buttonBox input[type="radio"]:checked+label.player2,
+.buttonBox label.player2 {
+    background-size: 16%;
+    background-repeat: no-repeat;
+    background-position: 50% 50%
+}
+
+.buttonBox input[type="radio"]:checked+label.player1 {
+    background-color: var(--light-grey-bg);
+    background-image: var(--x-icon-dark-grey);
+}
+
+.buttonBox label.player1 {
+    background-color: var(--dark-grey-bg);
+    background-image: var(--x-icon-grey);
+}
+
+.buttonBox input[type="radio"]:checked+label.player2 {
+    background-color: var(--light-grey-bg);
+    background-image: var(--zero-icon-dark-grey);
+}
+
+.buttonBox label.player2 {
+    background-color: var(--dark-grey-bg);
+    background-image: var(--zero-icon-grey);
+}
+
+/* ********************************************************/
+/* **********************RESPONSIVE************************/
+/* ****************************************************** */
+
+/* below 576px */
+@media(max-width: 36em) {
+    .mainContainer {
+        width: 20.4375em;
+    }
+
+    .xZeroLogos {
+        margin: 0 auto;
+    }
+
+    .gameMode {
+        font-size: 1em;
+        height: 3.5em;
+        letter-spacing: 1px;
+    }
+
+    .pickMarkBox {
+        margin-top: 1.4em;
+    }
+
+    .buttonBox {
+        width: 17.4375rem;
+        padding: 9px 2px;
+    }
+
+    .buttonBox label {
+        padding: 1px 66px;
+    }
+
+    .buttonBox input[type="radio"]:checked+label.player1,
+    .buttonBox label.player1,
+    .buttonBox input[type="radio"]:checked+label.player2,
+    .buttonBox label.player2 {
+        background-size: 24%;
+    }
+}

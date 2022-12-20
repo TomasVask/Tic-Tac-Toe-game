@@ -1,0 +1,169 @@
+.modalZero,
+.modalX,
+.modalTies,
+.modalRestart {
+    width: 100%;
+    height: 16.625em;
+    background-color: var(--medium-grey-bg);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: space-evenly;
+    z-index: 2;
+}
+
+.playerXWins,
+.playerZeroWins {
+    font-weight: 700;
+    font-size: 1em;
+    letter-spacing: 1px;
+    color: var(--light-grey-bg);
+    margin-top: 1.2em;
+    margin-bottom: 0;
+}
+
+.markWins {
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+}
+
+.markWins .markImg {
+    height: 4em;
+    width: 4em;
+    margin-right: 0.75rem;
+}
+
+.markWins span,
+.roundTied span {
+    font-weight: 700;
+    font-size: 2.5em;
+    letter-spacing: 2.5px;
+    margin-left: 0.75rem;
+}
+
+.winnerTextZero {
+    color: var(--zero-color);
+}
+
+.winnerTextX {
+    color: var(--x-color);
+}
+
+.roundTied {
+    margin-top: 2.2em
+}
+
+.roundTiedText {
+    color: var(--light-grey-bg);
+}
+
+.quit,
+.cancel {
+    width: auto;
+    height: 3.25em;
+    background: var(--light-grey-bg);
+    box-shadow: var(--btn-light-shadow);
+    border-radius: 10px;
+    border: none;
+    color: var(--dark-grey-bg);
+    font-weight: 700;
+    font-size: 1em;
+    letter-spacing: 1px;
+    margin: 0 0.5em;
+    padding: 0 1.21em
+}
+
+.quit:hover,
+.cancel:hover {
+    background: var(--grey-hover-bg);
+}
+
+.nextTies,
+.nextZero,
+.nextX,
+.restartConfirm {
+    width: 9.125em;
+    height: 3.25em;
+    background: var(--zero-color);
+    box-shadow: inset 0px -4px 0px #CC8B13;
+    border-radius: 10px;
+    border: none;
+    color: var(--dark-grey-bg);
+    font-weight: 700;
+    font-size: 1em;
+    margin: 0 0.5em;
+}
+
+.nextTies:hover,
+.nextZero:hover,
+.nextX:hover {
+    background: var(--zero-color-light);
+}
+
+.buttonOptions {
+    display: flex;
+    flex-flow: row;
+    margin-bottom: 1.3em;
+}
+
+.buttonOptionsTies {
+    display: flex;
+    flex-flow: row;
+    margin-bottom: 2.7em;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+}
+
+.hidden {
+    display: none;
+}
+
+/* ********************************************************/
+/* **********************RESPONSIVE************************/
+/* ****************************************************** */
+
+/* below 576px */
+@media(max-width: 36em) {
+
+    .modalZero,
+    .modalX,
+    .modalTies,
+    .modalRestart {
+        height: 14.25em;
+    }
+
+    .playerXWins,
+    .playerZeroWins {
+        font-size: 0.875em;
+        letter-spacing: 0.88px;
+    }
+
+    .markWins .markImg {
+        height: 1.75em;
+        width: 1.75em;
+        margin-right: 0.285rem;
+    }
+
+    .markWins span,
+    .roundTied span {
+        font-size: 1.5em;
+        letter-spacing: 1.5px;
+        margin-left: 0.285rem;
+    }
+
+}

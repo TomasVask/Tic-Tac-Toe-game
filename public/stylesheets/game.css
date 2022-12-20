@@ -1,0 +1,264 @@
+:root {
+    --medium-grey-bg: #1F3641;
+    --dark-grey-bg: #1A2A33;
+    --dark-grey-shadow: inset 0px -8px 0px #10212A;
+    --light-grey-bg: #A8BFC9;
+    --grey-hover-bg: #DBE8ED;
+    --btn-light-shadow: inset 0px -4px 0px #6B8997;
+    --x-color: #31C3BD;
+    --x-color-light: #65E9E4;
+    --x-shadow: inset 0px -8px 0px #118C87;
+    --zero-color: #F2B137;
+    --zero-color-light: #FFC860;
+    --zero-shadow: inset 0px -8px 0px #CC8B13;
+    --x-icon-outline: url("/starter-code/assets/icon-x-outline.svg");
+    --x-icon: url("/starter-code/assets/icon-x.svg");
+    --x-icon-dark-grey: url("/starter-code/assets/icon-x-dark-grey.svg");
+    --zero-icon-outline: url("/starter-code/assets/icon-o-outline.svg");
+    --zero-icon: url("/starter-code/assets/icon-o.svg");
+    --zero-icon-dark-grey: url("/starter-code/assets/icon-o-dark-grey.svg");
+}
+
+body {
+    font-family: 'Outfit', sans-serif;
+    background-color: var(--dark-grey-bg);
+}
+
+.mainContainer {
+    width: 28.75em;
+    margin: 0 auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: grid;
+    grid-template-areas:
+        "logo turnDisplay restart"
+        "grid-1 grid-2 grid-3"
+        "grid-4 grid-5 grid-6"
+        "grid-7 grid-8 grid-9"
+        "xCounter tiesCounter zeroCounter";
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 20px;
+}
+
+.xZeroLogos {
+    grid-area: logo;
+    align-self: center;
+}
+
+.turnDisplay {
+    grid-area: turnDisplay;
+    width: 8.75rem;
+    height: 3.25rem;
+    background: var(--medium-grey-bg);
+    box-shadow: inset 0px -4px 0px #10212A;
+    border-radius: 10px;
+    color: var(--light-grey-bg);
+    display: flex;
+    flex-flow: row;
+    justify-content: space-around;
+}
+
+.turnDisplay img {
+    width: 20px;
+    height: 20px;
+    margin: 0.85em 0 0 1.5em;
+}
+
+.turnDisplay span {
+    margin: 0.85em 1.5em 0 0;
+}
+
+.restart {
+    grid-area: restart;
+    width: 3.25rem;
+    height: 3.25rem;
+    background: var(--light-grey-bg);
+    box-shadow: var(--btn-light-shadow);
+    border-radius: 10px;
+    border: none;
+    justify-self: end;
+}
+
+.restart:hover {
+    background: var(--grey-hover-bg);
+}
+
+#grid1 {
+    grid-area: grid-1;
+}
+
+#grid2 {
+    grid-area: grid-2;
+}
+
+#grid3 {
+    grid-area: grid-3;
+}
+
+#grid4 {
+    grid-area: grid-4;
+}
+
+#grid5 {
+    grid-area: grid-5;
+}
+
+#grid6 {
+    grid-area: grid-6;
+}
+
+#grid7 {
+    grid-area: grid-7;
+}
+
+#grid8 {
+    grid-area: grid-8;
+}
+
+#grid9 {
+    grid-area: grid-9;
+}
+
+.xCounter,
+.tiesCounter,
+.zeroCounter {
+    height: 4.5rem;
+    border-radius: 15px;
+    font-size: 14px;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.xCounter {
+    grid-area: xCounter;
+    background: var(--x-color);
+}
+
+.tiesCounter {
+    grid-area: tiesCounter;
+    background: var(--light-grey-bg);
+}
+
+.zeroCounter {
+    grid-area: zeroCounter;
+    background: var(--zero-color);
+}
+
+.xCounter p,
+.tiesCounter p,
+.zeroCounter p {
+    font-size: 24px;
+    font-weight: 700;
+    margin: 0 auto;
+}
+
+/* *************************************************************** */
+/* Using classes for the main game buttons to change the mark icons*/
+.normal {
+    background-image: none;
+}
+
+.grid {
+    width: 8.75rem;
+    height: 8.75rem;
+    background: var(--medium-grey-bg);
+    box-shadow: var(--dark-grey-shadow);
+    border-radius: 15px;
+    border: none;
+    background-size: 47%;
+    background-repeat: no-repeat;
+    background-position: 50% 48%;
+}
+
+.grid.enterZero {
+    background-image: var(--zero-icon-outline);
+}
+
+.grid.clickedZero {
+    background-image: var(--zero-icon);
+}
+
+.grid.zeroWin {
+    background-image: var(--zero-icon-dark-grey);
+    background-color: var(--zero-color);
+    box-shadow: inset var(--zero-shadow);
+}
+
+.grid.enterX {
+    background-image: var(--x-icon-outline);
+}
+
+.grid.clickedX {
+    background-image: var(--x-icon);
+}
+
+.grid.xWin {
+    background-image: var(--x-icon-dark-grey);
+    background-color: var(--x-color);
+    box-shadow: var(--x-shadow)
+}
+
+
+/* ********************************************************/
+/* **********************RESPONSIVE************************/
+/* ****************************************************** */
+
+/* below 576px */
+@media(max-width: 36em) {
+    .mainContainer {
+        width: 20.5em;
+        top: 42.3%;
+    }
+
+    .xZeroLogos {
+        margin-bottom: 3rem;
+    }
+
+    .turnDisplay {
+        width: 6rem;
+        height: 2.5rem;
+        border-radius: 5px;
+    }
+
+    .turnDisplay img {
+        width: 1em;
+        height: 1em;
+        margin: 0.65em 0.285em 0 1.5em;
+    }
+
+    .turnDisplay span {
+        font-size: 0.875em;
+        margin: 0.65em 1.5em 0 0.285em;
+    }
+
+    .restart {
+        width: 2.5rem;
+        height: 2.5rem;
+        border-radius: 5px;
+    }
+
+    .xCounter,
+    .tiesCounter,
+    .zeroCounter {
+        height: 3.75rem;
+        border-radius: 10px;
+    }
+
+    .xCounter p,
+    .tiesCounter p,
+    .zeroCounter p {
+        font-size: 1.25em;
+    }
+
+    .grid {
+        width: 6rem;
+        height: 6rem;
+        border-radius: 10px;
+        background-size: 40%;
+        background-position: 50% 46%;
+    }
+}

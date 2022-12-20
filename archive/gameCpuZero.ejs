@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/stylesheets/game.css">
+    <link rel="stylesheet" href="/stylesheets/modalMulti.css">
+    <link rel="icon" type="image/ico" sizes="32x32" href="../starter-code/assets/favicon-32x32.ico">
+    <title>Game</title>
+</head>
+
+<body>
+    <div class="mainContainer">
+        <div class="xZeroLogos">
+            <img src="/starter-code/assets/logo.svg" alt="">
+        </div>
+        <div class="turnDisplay">
+            <img id="turnDisplayImg" src="/starter-code/assets/icon-x-grey.svg" alt="">
+            <span>TURN</span>
+        </div>
+        <form class="restart" action="">
+            <button class="restart"><img src="/starter-code/assets/icon-restart.svg" alt=""></button>
+        </form>
+        <button class="grid normal" id="grid1"></button>
+        <button class="grid normal" id="grid2"></button>
+        <button class="grid normal" id="grid3"></button>
+        <button class="grid normal" id="grid4"></button>
+        <button class="grid normal" id="grid5"></button>
+        <button class="grid normal" id="grid6"></button>
+        <button class="grid normal" id="grid7"></button>
+        <button class="grid normal" id="grid8"></button>
+        <button class="grid normal" id="grid9"></button>
+        <div class="xCounter">
+            <div>
+                <%if(picks1st==="xButton"){%>
+                    <span>X </span><span class="xP1">(YOU)</span>
+                    <% } else {%>
+                        <span>X </span><span class="xP2">(CPU)</span>
+                        <% } %>
+            </div>
+            <p class="xResult">0</p>
+        </div>
+        <div class="tiesCounter">
+            <span>TIES</span>
+            <p class="tiesResult">0</p>
+        </div>
+        <div class="zeroCounter">
+            <div>
+                <%if(picks1st==="xButton"){%>
+                    <span>0 </span><span class="zeroP2">(CPU)</span>
+                    <% } else {%>
+                        <span>0 </span><span class="zeroP1">(YOU)</span>
+                        <% } %>
+            </div>
+            <p class="zeroResult">0</p>
+        </div>
+    </div>
+
+    <%- include("../partials/modalX")%>
+        <%- include("../partials/modalZero")%>
+            <%- include("../partials/modalTies")%>
+                <%- include("../partials/modalRestart")%>
+
+
+                    <div class="overlay hidden"></div>
+
+</body>
+
+<script src="/javascripts/gameCpuZero.js"></script>
+
+
+</html>
