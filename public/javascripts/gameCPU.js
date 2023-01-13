@@ -23,6 +23,7 @@ const zero = {
     P1: document.querySelector(".zeroP1"),
     Score: JSON.parse(sessionStorage.getItem("autosavezero")),
 };
+
 const x = {
     modal: document.querySelector(".modalX"),
     next: document.querySelector(".nextX"),

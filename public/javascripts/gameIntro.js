@@ -23,6 +23,7 @@ const xClick = (() => {
         dom.newGameVsPlayer.removeAttribute("disabled");
     };
 })();
+
 dom.xButton.addEventListener("click", xClick);
 
 const zeroClick = (() => {
