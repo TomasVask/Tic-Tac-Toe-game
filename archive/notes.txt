@@ -1,32 +1,7 @@
-
-CPU scenarijai:
-jeigu pradedu AS: (cpuClickZero)
-    1) dedu betkur
-    2) CPU -RANDOM
-    3) as dedu
-    4) CPU -preventia
-    5) dedu
-    6) CPU preventina
-    is RANDOM reiktu 3 minusuoti
-
-JEIGU CPU pradeda:(cpuClickX)
-    1) CPU - RANDOM
-    2) as dedu
-    3) CPU -RANDOM
-    4) renkuosi as
-    5) renkasi is pergalingu/preventina
-    is RANDOM reiktu 4 minusuoti
-
-
 klaidos:
 9) Unchecked runtime.lastError: A listener indicated an asynchronous response by returning true, but the message channel closed before a response was received
  -saugoti ir clickntaus langelius i sesija
 - 
-
-
-
-
-
 query string veikia:
 perduodu per metodą GET!!!!!! player 1 parametr1 i multi.ejs. 
 multi.ejs ivedu <%=player1%>
@@ -39,3 +14,10 @@ const { player1 } = req.body;
 Bet tai nereikalinga norint perduoti MARK pasirinkima. pagalvoti, ar aatietyje cookis bus reikalingas kitame kontekste.
 
 promise.all laukia, kol viskas prasisuks
+
+
+
+taisymai:
+1) perziuret, ar galima naudoti object constructors visoje sintakseje ir prototype funkcijas construktoriu viduje
+jei ka, pasikartoti  https://www.theodinproject.com/lessons/node-path-javascript-objects-and-object-constructors
+2) perziureti, ar galima naudoti factory funkcijas.

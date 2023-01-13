@@ -1,23 +1,38 @@
 
-let xButton = document.querySelector("#xButton");
-let zeroButton = document.querySelector("#zeroButton");
-const newGameVsCPU = document.querySelector("#newGameVsCPU");
-const newGameVsPlayer = document.querySelector("#newGameVsPlayer");
-const P1 = document.querySelector(".P1");
+const dom = {
+    newGameVsCPU: document.querySelector("#newGameVsCPU"),
+    newGameVsPlayer: document.querySelector("#newGameVsPlayer"),
+    xButton: document.querySelector("#xButton"),
+    zeroButton: document.querySelector("#zeroButton"),
+    P1: document.querySelector(".P1"),
+};
 
-newGameVsCPU.setAttribute("disabled", "true");
-newGameVsPlayer.setAttribute("disabled", "true");
+const initialState = (() => {
+    return () => {
+        dom.newGameVsCPU.setAttribute("disabled", "true");
+        dom.newGameVsPlayer.setAttribute("disabled", "true");
+    };
+})();
+initialState();
 
-xButton.addEventListener("click", function () {
-    xButton.className = "P1";
-    zeroButton.className = "P2";
-    newGameVsCPU.removeAttribute("disabled");
-    newGameVsPlayer.removeAttribute("disabled");
-});
+const xClick = (() => {
+    return () => {
+        xButton.className = "P1";
+        zeroButton.className = "P2";
+        dom.newGameVsCPU.removeAttribute("disabled");
+        dom.newGameVsPlayer.removeAttribute("disabled");
+    };
+})();
+dom.xButton.addEventListener("click", xClick);
 
-zeroButton.addEventListener("click", function () {
-    zeroButton.className = "P1";
-    xButton.className = "P2";
-    newGameVsCPU.removeAttribute("disabled");
-    newGameVsPlayer.removeAttribute("disabled");
-});
+const zeroClick = (() => {
+    return () => {
+        zeroButton.className = "P1";
+        xButton.className = "P2";
+        dom.newGameVsCPU.removeAttribute("disabled");
+        dom.newGameVsPlayer.removeAttribute("disabled");
+    };
+})();
+dom.zeroButton.addEventListener("click", zeroClick);
+
+
