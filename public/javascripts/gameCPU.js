@@ -1,18 +1,10 @@
 //pagal gerasias praktikas reikia blobalius elementus kaip galima labiau slepti, 
 // taciau DOM elementai paimti pagal ID automatiskai yra globalūs.
 //ar yra būdas padaryti lokaliais? ir ar reikia?
-const grid = (() => {
-    const grid1 = document.getElementById("grid1");
-    const grid2 = document.getElementById("grid2");
-    const grid3 = document.getElementById("grid3");
-    const grid4 = document.getElementById("grid4");
-    const grid5 = document.getElementById("grid5");
-    const grid6 = document.getElementById("grid6");
-    const grid7 = document.getElementById("grid7");
-    const grid8 = document.getElementById("grid8");
-    const grid9 = document.getElementById("grid9");
-    return { grid1, grid2, grid3, grid4, grid5, grid6, grid7, grid8, grid9 }
-})();
+const grid = {};
+for (let item of [grid1, grid2, grid3, grid4, grid5, grid6, grid7, grid8, grid9]) {
+    grid[item] = document.getElementById(`${item}`); // kodel veikia ir be sito?
+};
 
 const zero = {
     modal: document.querySelector(".modalZero"),
@@ -62,14 +54,10 @@ const misc = {
 // **************FUNCTIONS************************
 // ***********************************************
 const session = () => {
-    if (x.Score === null) {
-        x.Score = 0;
-    };
-    if (zero.Score === null) {
-        zero.Score = 0;
-    };
-    if (ties.Score === null) {
-        ties.Score = 0;
+    for (let item of [x, zero, ties]) {
+        if (item.Score === null) {
+            item.Score = 0;
+        };
     };
     if (misc.gameCount === null) {
         misc.gameCount = 0;
@@ -120,22 +108,19 @@ const winScenariosFactory = (gridA, gridB, gridC) => { // čia FACTORY funkcija
         };
     };
     const winScenarios = () => {
+        function repl(clicked, win) {
+            for (let item of [gridA, gridB, gridC]) {
+                item.classList.replace(clicked, win);
+            };
+            misc.gameFinished = true;
+            setTimeout(() => {
+                winRunner()
+            }, 300);
+        };
         if (gridA.classList[1] === "clickedX" && gridB.classList[1] === "clickedX" && gridC.classList[1] === "clickedX") {
-            gridA.classList.replace("clickedX", "xWin");
-            gridB.classList.replace("clickedX", "xWin");
-            gridC.classList.replace("clickedX", "xWin");
-            misc.gameFinished = true;
-            setTimeout(() => {
-                winRunner()
-            }, 300);
+            repl("clickedX", "xWin");
         } else if (gridA.classList[1] === "clickedZero" && gridB.classList[1] === "clickedZero" && gridC.classList[1] === "clickedZero") {
-            gridA.classList.replace("clickedZero", "zeroWin");
-            gridB.classList.replace("clickedZero", "zeroWin");
-            gridC.classList.replace("clickedZero", "zeroWin");
-            misc.gameFinished = true;
-            setTimeout(() => {
-                winRunner()
-            }, 300);
+            repl("clickedZero", "zeroWin");
         };
     };
     //pagal factory funkcijos konstrukciją, norėdamas toliau naudoti gridA, gridB, gridC elementus
@@ -148,7 +133,7 @@ const winScenariosFactory = (gridA, gridB, gridC) => { // čia FACTORY funkcija
 const run = { //šitas dėl Factory Funkcijos
     top: winScenariosFactory(grid1, grid2, grid3),
     left: winScenariosFactory(grid1, grid4, grid7),
-    slantDown: winScenariosFactory(grid.grid1, grid5, grid9),
+    slantDown: winScenariosFactory(grid1, grid5, grid9),
     midVert: winScenariosFactory(grid2, grid5, grid8),
     right: winScenariosFactory(grid3, grid6, grid9),
     slantUp: winScenariosFactory(grid3, grid5, grid7),
@@ -339,6 +324,7 @@ const cpuRunner = function () {
 };
 cpuRunner();
 
+//**************MANUAL actions*************** */
 
 function manualClicker(gridInput) {
     gridInput.classList.replace("enterX", "clickedX");
@@ -355,7 +341,6 @@ function manualClicker(gridInput) {
     misc.cpuStop = false;
     // console.log(`user -- NextTurn ${initialTurn}, USER added: ${excludeArray}`);
 };
-
 
 const mouseEnter = (() => {
     return function () {
@@ -374,115 +359,17 @@ const mouseLeave = (() => {
     };
 })();
 
-grid1.addEventListener("mouseenter", mouseEnter);
-grid1.addEventListener("mouseleave", mouseLeave);
-grid1.addEventListener("click", () => {
-    manualClicker(grid1);
-    run.top.winScenarios();
-    run.left.winScenarios();
-    run.slantDown.winScenarios();
-    tiesRunner();
-    cpuRunner();
-});
+for (let item of [grid1, grid2, grid3, grid4, grid5, grid6, grid7, grid8, grid9]) {
+    item.addEventListener("mouseenter", mouseEnter);
+    item.addEventListener("mouseleave", mouseLeave);
+    item.addEventListener("click", () => {
+        manualClicker(item);
+        gameCheck();
+        cpuRunner();
+    });
+};
 
-
-// *********
-grid2.addEventListener("mouseenter", mouseEnter);
-grid2.addEventListener("mouseleave", mouseLeave);
-grid2.addEventListener("click", () => {
-    manualClicker(grid2);
-    run.top.winScenarios();
-    run.midVert.winScenarios();
-    tiesRunner();
-    cpuRunner();
-});
-
-
-// *********
-grid3.addEventListener("mouseenter", mouseEnter);
-grid3.addEventListener("mouseleave", mouseLeave);
-grid3.addEventListener("click", () => {
-    manualClicker(grid3);
-    run.top.winScenarios();
-    run.right.winScenarios();
-    run.slantUp.winScenarios();
-    tiesRunner();
-    cpuRunner();
-});
-
-
-// *******
-grid4.addEventListener("mouseenter", mouseEnter);
-grid4.addEventListener("mouseleave", mouseLeave);
-grid4.addEventListener("click", () => {
-    manualClicker(grid4);
-    run.left.winScenarios();
-    run.midHor.winScenarios();
-    tiesRunner();
-    cpuRunner();
-});
-
-
-// ********
-grid5.addEventListener("mouseenter", mouseEnter);
-grid5.addEventListener("mouseleave", mouseLeave);
-grid5.addEventListener("click", () => {
-    manualClicker(grid5);
-    run.midVert.winScenarios();
-    run.slantDown.winScenarios();
-    run.slantUp.winScenarios();
-    run.midHor.winScenarios();
-    tiesRunner();
-    cpuRunner();
-});
-
-
-// ********
-grid6.addEventListener("mouseenter", mouseEnter);
-grid6.addEventListener("mouseleave", mouseLeave);
-grid6.addEventListener("click", () => {
-    manualClicker(grid6);
-    run.right.winScenarios();
-    run.midHor.winScenarios();
-    tiesRunner();
-    cpuRunner();
-});
-
-
-// *********
-grid7.addEventListener("mouseenter", mouseEnter);
-grid7.addEventListener("mouseleave", mouseLeave);
-grid7.addEventListener("click", () => {
-    manualClicker(grid7);
-    run.left.winScenarios();
-    run.slantUp.winScenarios();
-    run.bottom.winScenarios();
-    tiesRunner();
-    cpuRunner();
-});
-
-// *********
-grid8.addEventListener("mouseenter", mouseEnter);
-grid8.addEventListener("mouseleave", mouseLeave);
-grid8.addEventListener("click", () => {
-    manualClicker(grid8);
-    run.bottom.winScenarios();
-    run.midVert.winScenarios();
-    tiesRunner();
-    cpuRunner();
-});
-
-// *********
-grid9.addEventListener("mouseenter", mouseEnter);
-grid9.addEventListener("mouseleave", mouseLeave);
-grid9.addEventListener("click", () => {
-    manualClicker(grid9);
-    run.slantDown.winScenarios();
-    run.right.winScenarios();
-    run.bottom.winScenarios();
-    tiesRunner();
-    cpuRunner();
-});
+//***********************game end, cleanup************/
 
 const cleanup = () => {
     if (misc.gameCount % 2 === 0) {
@@ -499,17 +386,10 @@ const cleanup = () => {
     };
     misc.excludeArray = [];
     misc.gameFinished = false;
-    grid.grid1.removeAttribute("disabled");
-    grid.grid2.removeAttribute("disabled");
-    grid.grid3.removeAttribute("disabled");
-    grid.grid4.removeAttribute("disabled");
-    grid.grid5.removeAttribute("disabled");
-    grid.grid6.removeAttribute("disabled");
-    grid.grid7.removeAttribute("disabled");
-    grid.grid8.removeAttribute("disabled");
-    grid.grid9.removeAttribute("disabled");
+    for (let item of [grid1, grid2, grid3, grid4, grid5, grid6, grid7, grid8, grid9]) {
+        item.removeAttribute("disabled");
+    };
 };
-// ***************************************************
 
 const nextRound = () => {
     misc.overlay.classList.toggle("hidden");
@@ -517,37 +397,19 @@ const nextRound = () => {
     turnMark();
 
 };
-
-x.next.addEventListener("click", (e) => {
-    e.preventDefault();
-    x.modal.classList.toggle("hidden");
-    nextRound();
-    cpuRunner();
-});
-
-zero.next.addEventListener("click", (e) => {
-    e.preventDefault();
-    zero.modal.classList.toggle("hidden");
-    nextRound();
-    cpuRunner();
-});
-
-ties.next.addEventListener("click", (e) => {
-    e.preventDefault();
-    ties.modal.classList.toggle("hidden");
-    nextRound();
-    cpuRunner();
-});
-misc.quit[0].addEventListener("click", () => {
-    sessionStorage.clear();
-})
-misc.quit[1].addEventListener("click", () => {
-    sessionStorage.clear();
-})
-misc.quit[2].addEventListener("click", () => {
-    sessionStorage.clear();
-})
-
+for (let item of [x, zero, ties]) {
+    item.next.addEventListener("click", (e) => {
+        e.preventDefault();
+        item.modal.classList.toggle("hidden");
+        nextRound();
+        cpuRunner();
+    });
+};
+for (let item of [0, 1, 2]) {
+    misc.quit[item].addEventListener("click", () => {
+        sessionStorage.clear();
+    });
+}
 restart.restartBtn.addEventListener("click", (e) => {
     e.preventDefault();
     restart.modalRestart.classList.remove("hidden");
