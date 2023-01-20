@@ -17,31 +17,25 @@ app.use(session(sessionOptions));
 
 app.get("/", (req, res) => {
     res.render("gameIntro");
-})
+});
 
-app.post("/multiplayergame", (req, res) => {
-    const { picks1st } = req.body;
-    res.render("gameMulti", { picks1st });
-})
-
-app.post("/cpugame", (req, res) => {
-    const { picks1st } = req.body;
-    res.render("gameCPU", { picks1st });
-})
+app.post("/game", (req, res) => {
+    const { picks1st, gameMode } = req.body;
+    res.render("game", { picks1st, gameMode });
+});
 
 app.all("*", (req, res, next) => {
     next(new ExpressError("Page not Found", 404))
-})
+});
 
 app.use((err, req, res, next) => {
     const { status = 500 } = err;
     const { message = "Whoops, something went wrong! We are working on that now!" } = err;
     res.status(status).send(message);
+});
 
-})
-const port = process.env.PORT || 3000
+const port = process.env.PORT || 3000;
 
 app.listen(port, () => {
     console.log(`LISTENING ON PORT ${port}`)
-})
-
+});

@@ -36,10 +36,18 @@
         <div class="xCounter">
             <div>
                 <%if(picks1st==="xButton"){%>
-                    <span>X </span><span class="xP1">(YOU)</span>
-                    <% } else {%>
-                        <span>X </span><span class="xP2">(CPU)</span>
-                        <% } %>
+                    <% if(gameMode==="NEW GAME (VS CPU)" ) {%>
+                        <span>X </span><span class="xP1">(YOU)</span>
+                        <% } else {%>
+                            <span>X </span><span class="xP1 manual">(P1)</span>
+                            <% } %>
+                                <% } else if(picks1st==="zeroButton" ){%>
+                                    <% if (gameMode==="NEW GAME (VS CPU)" ){ %>
+                                        <span>X </span><span class="xP2">(CPU)</span>
+                                        <% } else{ %>
+                                            <span>X </span><span class="xP2 manual">(P2)</span>
+                                            <%}%>
+                                                <% } %>
             </div>
             <p class="xResult">0</p>
         </div>
@@ -50,10 +58,18 @@
         <div class="zeroCounter">
             <div>
                 <%if(picks1st==="xButton"){%>
-                    <span>0 </span><span class="zeroP2">(CPU)</span>
-                    <% } else {%>
-                        <span>0 </span><span class="zeroP1">(YOU)</span>
-                        <% } %>
+                    <% if(gameMode==="NEW GAME (VS CPU)" ) {%>
+                        <span>0 </span><span class="zeroP2">(CPU)</span>
+                        <% } else {%>
+                            <span>0 </span><span class="zeroP2 manual">(P2)</span>
+                            <% } %>
+                                <% } else if(picks1st==="zeroButton" ){%>
+                                    <% if (gameMode==="NEW GAME (VS CPU)" ){ %>
+                                        <span>0 </span><span class="zeroP1">(YOU)</span>
+                                        <% } else{ %>
+                                            <span>0 </span><span class="zeroP1 manual">(P1)</span>
+                                            <%}%>
+                                                <% } %>
             </div>
             <p class="zeroResult">0</p>
         </div>
@@ -69,7 +85,7 @@
 
 </body>
 
-<script src="/javascripts/gameCPU.js"></script>
+<script src="/javascripts/game.js"></script>
 
 
 </html>

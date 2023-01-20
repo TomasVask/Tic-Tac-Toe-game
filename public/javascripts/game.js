@@ -42,6 +42,7 @@ const misc = {
     overlay: document.querySelector(".overlay"),
     gridElement: document.querySelectorAll(".grid"),
     quit: document.querySelectorAll(".quit"),
+    manual: document.querySelector(".manual"),
     gameCount: JSON.parse(sessionStorage.getItem("autosaveGameCount")),
     initialTurn: JSON.parse(sessionStorage.getItem("autosaveInitialTurn")),
     gameFinished: false,
@@ -86,6 +87,7 @@ const winScenariosFactory = (gridA, gridB, gridC) => { // čia FACTORY funkcija
     const winRunner = () => { // ar geriau winRunner funkcija laikyti viduje, ar išorėje, ar nėra skirtumo?
         const xwin = document.querySelector(".xWin");
         const zerowin = document.querySelector(".zeroWin");
+        const manual = document.querySelector(".manual");
         const input = (input, win) => {
             input.modal.classList.remove("hidden");
             input.Score++;
@@ -94,9 +96,18 @@ const winScenariosFactory = (gridA, gridB, gridC) => { // čia FACTORY funkcija
             sessionStorage.setItem("autosaveGameCount", JSON.stringify(misc.gameCount));
             misc.overlay.classList.remove("hidden");
             if (win && input.P1) {
-                input.playerWins.innerHTML = "YOU WON!";
+                if (manual === null) {
+                    input.playerWins.innerHTML = "YOU WON!";
+                } else {
+                    input.playerWins.innerHTML = "PLAYER 1 WINS!";
+                };
             } else {
-                input.playerWins.innerHTML = "OH NO, YOU LOST...";
+                if (manual === null) {
+                    input.playerWins.innerHTML = "OH NO, YOU LOST...";
+                } else {
+                    input.playerWins.innerHTML = "PLAYER 2 WINS!";
+                }
+
             };
         };
         if (xwin) {
@@ -194,7 +205,7 @@ const cpuClickX = (() => {
         misc.initialTurn++;
         turnMark();
         gameCheck();
-        // console.log(`RANDOM -- NextTurn ${initialTurn}, CPU added: ${excludeArray}`);
+        console.log(`RANDOM -- NextTurn ${misc.initialTurn}, CPU added: ${misc.excludeArray}`);
     };
 })();
 
@@ -210,7 +221,7 @@ const cpuClickZero = (() => {
         misc.initialTurn++;
         turnMark();
         gameCheck();
-        // console.log(`RANDOM -- NextTurn ${initialTurn}, CPU added: ${excludeArray}`);
+        console.log(`RANDOM -- NextTurn ${misc.initialTurn}, CPU added: ${misc.excludeArray}`);
     };
 })();
 
@@ -247,7 +258,7 @@ const cpuActiveClicker = function (input) {
     turnMark();
     misc.cpuStop = true;
     gameCheck();
-    // console.log(`ACTIVE -- NextTurn ${initialTurn}, CPU added: ${excludeArray}`);
+    console.log(`ACTIVE -- NextTurn ${misc.initialTurn}, CPU added: ${misc.excludeArray}`);
 };
 
 function cpuScenarios(grA, grB, grC, manual, cpu) {
@@ -297,34 +308,55 @@ function cpuScenarios(grA, grB, grC, manual, cpu) {
             }, 290);
         };
     } else {
+        // if (!misc.cpuStop && !misc.gameFinished) {
         cpuRandomClicker();
+        // };
     }
 };
 
 const cpuRunner = function () {
-    if (x.P1) {
-        cpuScenarios(grid1, grid2, grid3, "clickedX", "clickedZero");
-        cpuScenarios(grid1, grid4, grid7, "clickedX", "clickedZero");
-        cpuScenarios(grid1, grid5, grid9, "clickedX", "clickedZero");
-        cpuScenarios(grid2, grid5, grid8, "clickedX", "clickedZero");
-        cpuScenarios(grid3, grid6, grid9, "clickedX", "clickedZero");
-        cpuScenarios(grid3, grid5, grid7, "clickedX", "clickedZero");
-        cpuScenarios(grid4, grid5, grid6, "clickedX", "clickedZero");
-        cpuScenarios(grid7, grid8, grid9, "clickedX", "clickedZero");
-    } else {
-        cpuScenarios(grid1, grid2, grid3, "clickedZero", "clickedX");
-        cpuScenarios(grid1, grid4, grid7, "clickedZero", "clickedX");
-        cpuScenarios(grid1, grid5, grid9, "clickedZero", "clickedX");
-        cpuScenarios(grid2, grid5, grid8, "clickedZero", "clickedX");
-        cpuScenarios(grid3, grid6, grid9, "clickedZero", "clickedX");
-        cpuScenarios(grid3, grid5, grid7, "clickedZero", "clickedX");
-        cpuScenarios(grid4, grid5, grid6, "clickedZero", "clickedX");
-        cpuScenarios(grid7, grid8, grid9, "clickedZero", "clickedX");
-    }
+    if (misc.manual === null) {
+        if (x.P1) {
+            cpuScenarios(grid1, grid2, grid3, "clickedX", "clickedZero");
+            cpuScenarios(grid1, grid4, grid7, "clickedX", "clickedZero");
+            cpuScenarios(grid1, grid5, grid9, "clickedX", "clickedZero");
+            cpuScenarios(grid2, grid5, grid8, "clickedX", "clickedZero");
+            cpuScenarios(grid3, grid6, grid9, "clickedX", "clickedZero");
+            cpuScenarios(grid3, grid5, grid7, "clickedX", "clickedZero");
+            cpuScenarios(grid4, grid5, grid6, "clickedX", "clickedZero");
+            cpuScenarios(grid7, grid8, grid9, "clickedX", "clickedZero");
+        } else {
+            cpuScenarios(grid1, grid2, grid3, "clickedZero", "clickedX");
+            cpuScenarios(grid1, grid4, grid7, "clickedZero", "clickedX");
+            cpuScenarios(grid1, grid5, grid9, "clickedZero", "clickedX");
+            cpuScenarios(grid2, grid5, grid8, "clickedZero", "clickedX");
+            cpuScenarios(grid3, grid6, grid9, "clickedZero", "clickedX");
+            cpuScenarios(grid3, grid5, grid7, "clickedZero", "clickedX");
+            cpuScenarios(grid4, grid5, grid6, "clickedZero", "clickedX");
+            cpuScenarios(grid7, grid8, grid9, "clickedZero", "clickedX");
+        };
+    };
 };
 cpuRunner();
 
 //**************MANUAL actions*************** */
+
+const mouseEnter = (() => {
+    return function () {
+        if (misc.initialTurn % 2 === 0) {
+            this.classList.replace("normal", "enterX");
+        } else {
+            this.classList.replace("normal", "enterZero");
+        };
+    };
+})();
+
+const mouseLeave = (() => {
+    return function () {
+        this.classList.replace("enterX", "normal");
+        this.classList.replace("enterZero", "normal");
+    };
+})();
 
 function manualClicker(gridInput) {
     gridInput.classList.replace("enterX", "clickedX");
@@ -339,25 +371,8 @@ function manualClicker(gridInput) {
     misc.initialTurn++;
     turnMark();
     misc.cpuStop = false;
-    // console.log(`user -- NextTurn ${initialTurn}, USER added: ${excludeArray}`);
+    console.log(`user -- NextTurn ${misc.initialTurn}, USER added: ${misc.excludeArray}`);
 };
-
-const mouseEnter = (() => {
-    return function () {
-        if (x.P1) {
-            this.classList.replace("normal", "enterX");
-        } else if (zero.P1) {
-            this.classList.replace("normal", "enterZero");
-        }
-    };
-})();
-
-const mouseLeave = (() => {
-    return function () {
-        this.classList.replace("enterX", "normal");
-        this.classList.replace("enterZero", "normal");
-    };
-})();
 
 for (let item of [grid1, grid2, grid3, grid4, grid5, grid6, grid7, grid8, grid9]) {
     item.addEventListener("mouseenter", mouseEnter);
