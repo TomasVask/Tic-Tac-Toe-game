@@ -37,9 +37,7 @@ Short description:
 ![](./screenshots/localhost_3000_multiplayergame.png)
 
 ### Links
-
-- Solution URL: [Add solution URL here](https://your-solution-url.com)
-- Live Site URL: [](https://tictactoegame.herokuapp.com/)
+- Live Site URL: [Tic Tac Toe game](https://tic-tac-toe-game-new.herokuapp.com/)
 
 ## My process
 
